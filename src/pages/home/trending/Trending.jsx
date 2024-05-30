@@ -12,6 +12,7 @@ const Trending = () => {
       <ContentWrapper>
         <span className="carouselTitle trending">Trending</span>
       </ContentWrapper>
+      
       <Carousel data={data?.results} loading={loading} />
     </div>
   );

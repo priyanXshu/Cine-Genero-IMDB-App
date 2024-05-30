@@ -6,9 +6,13 @@ const Genres = ({ data }) => {
   const { genres } = useSelector((state) => state.home);
   return (
     <div className="genres">
-      {data?.map((g,i) => {
+      {data?.map((g, i) => {
         if (!genres[g]?.name) return;
-        return <div key={i} className="genre">{genres[g]?.name}</div>;
+        return (
+          <div key={i} className="genre">
+            {genres[g]?.name}
+          </div>
+        );
       })}
     </div>
   );

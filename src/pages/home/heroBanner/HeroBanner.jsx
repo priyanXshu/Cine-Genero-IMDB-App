@@ -1,61 +1,49 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from "react-responsive-carousel";
+import { Link } from "react-router-dom";
 import "./style.scss";
-
-import useFetch from "../../../hooks/useFetch";
-
-import Img from "../../../components/lazyLoadImage/Img";
-import ContentWrapper from "../../../components/contentWrapper/ContentWrapper";
-
-const HeroBanner = () => {
-  const [background, setBackground] = useState("");
-  const [query, setQuery] = useState("");
-  const navigate = useNavigate();
-  const { url } = useSelector((state) => state.home);
-  const { data, loading } = useFetch("/movie/upcoming");
+const HomeBanner = () => {
+  const [popularMovies, setPopularMovies] = useState([]);
 
   useEffect(() => {
-    const bg =
-      url.backdrop +
-      data?.results?.[Math.floor(Math.random() * 20)]?.backdrop_path;
-    setBackground(bg);
-  }, [data]);
+    fetch(
+      "https://api.themoviedb.org/3/movie/popular?api_key=4c7cfae8ed0873ce4567239b2d699e39&language=en-US"
+    )
+      .then((res) => res.json())
+      .then((data) => setPopularMovies(data.results));
+  }, []);
 
-  const searchQueryHandler = (event) => {
-    if (event.key === "Enter" && query.length > 0) {
-      navigate(`/search/${query}`);
-    }
-  };
-  console.log(background);
   return (
-    <div className="heroBanner">
-      {!loading && (
-        <div className="backdrop-img">
-          <Img src={background} />
-        </div>
-      )}
-
-      <div className="opacity-layer"></div>
-      <ContentWrapper>
-        <div className="heroBannerContent">
-          <span className="title">Welcome...</span>
-          <span className="subTitle">
-          Discover millions of movies and TV series. Explore for free right now!
-          </span>
-          <div className="searchInput">
-            <input
-              type="text"
-              placeholder="Search for a movie or tv show...."
-              onChange={(e) => setQuery(e.target.value)}
-              onKeyUp={searchQueryHandler}
-            />
-            <button onClick={() => navigate(`/search/${query}`)}>Search</button>
-          </div>
-        </div>
-      </ContentWrapper>
-    </div>
+    <>
+      <div className="poster">
+        
+        <Carousel
+          showThumbs={false}
+          autoPlay={true}
+          transitionTime={3}
+          infiniteLoop={true}
+          showStatus={false}
+          showIndicators={false}
+        >
+          {popularMovies.map((movie) => (
+            <Link
+              key={movie.id}
+              to={`/movie/${movie.id}`}
+            >
+              <div className="posterImage">
+                <img
+                  src={`https://image.tmdb.org/t/p/original${
+                    movie && movie.backdrop_path
+                  }`}
+                />
+              </div>
+            </Link>
+          ))}
+        </Carousel>
+      </div>
+    </>
   );
 };
 
-export default HeroBanner;
+export default HomeBanner;

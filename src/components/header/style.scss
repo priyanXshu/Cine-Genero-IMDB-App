@@ -4,7 +4,7 @@
   position: fixed;
   transform: translateY(0);
   width: 100%;
-  height: 60px;
+  height: 50px;
   z-index: 1;
   display: flex;
   align-items: center;
@@ -30,7 +30,7 @@
   .logo {
     cursor: pointer;
     img {
-      height: 50px;
+      height: 40px;
       border-radius: 25px;
     }
     img:hover {
@@ -60,7 +60,7 @@
       }
       cursor: pointer;
       &:hover {
-        color: rgb(30, 255, 0);
+        color: #66fcf1;
       }
     }
   }
@@ -83,7 +83,7 @@
     .menuItems {
       display: flex;
       position: absolute;
-      top: 60px;
+      top: 50px;
       left: 0;
       background: var(--black3);
       flex-direction: column;

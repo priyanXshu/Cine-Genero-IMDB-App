@@ -22,9 +22,10 @@ const CustomPagination = ({ pageNum, setPageNum, numOfPages = 20 }) => {
         color="primary"
         // variant="outlined"
         sx={{
-          '& .MuiPaginationItem-root': {
-            color: 'white',
-          }}}
+          "& .MuiPaginationItem-root": {
+            color: "white",
+          },
+        }}
         onChange={handlePageChange}
       />
     </div>
